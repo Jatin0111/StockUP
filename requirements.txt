@@ -13,5 +13,6 @@ keras
 plotly
 streamlit_extras
 millify
+pyproject-toml
 TA-Lib
 tensorflow
