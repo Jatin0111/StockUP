@@ -13,6 +13,5 @@ keras
 plotly
 streamlit_extras
 millify
-talib
+TA-Lib
 tensorflow
-dateutil
