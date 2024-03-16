@@ -4,6 +4,7 @@ requests
 pandas
 numpy
 matplotlib
+pyproject-toml
 jugaad_data
 bsedata
 streamlit
@@ -13,6 +14,5 @@ keras
 plotly
 streamlit_extras
 millify
-pyproject-toml
-TA-Lib
 tensorflow
+TA-Lib
