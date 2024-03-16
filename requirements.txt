@@ -8,8 +8,7 @@ jugaad_data
 bsedata
 streamlit
 datetime
-sklearn
-warnings
+scikit-learn
 keras
 plotly
 streamlit_extras
