@@ -6,7 +6,6 @@ numpy
 matplotlib
 jugaad_data
 bsedata
-time
 streamlit
 datatime
 sklearn
