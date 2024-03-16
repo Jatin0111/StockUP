@@ -7,7 +7,7 @@ matplotlib
 jugaad_data
 bsedata
 streamlit
-datatime
+datetime
 sklearn
 warnings
 keras
