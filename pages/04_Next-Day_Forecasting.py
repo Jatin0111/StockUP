@@ -11,7 +11,7 @@ np.random.seed(1)
 tf.random.set_seed(1)
 rn.seed(1)
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, LSTM
+from keras.layers import Dense, LSTM
 from sklearn.metrics import mean_squared_error, mean_absolute_error,r2_score
 
 st.set_page_config(page_title="StockUP", layout="wide", page_icon=":chart_with_upwards_trend:")
@@ -60,7 +60,7 @@ def my_LSTM(ticker):
         # creating train and test sets
             dataset = new_data.values
 
-            train = dataset[0:987, :]
+            train = dataset[:987, :]
             valid = dataset[987:, :]
 
         # converting dataset into x_train and y_train
@@ -79,7 +79,6 @@ def my_LSTM(ticker):
             model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1], 1)))
             model.add(LSTM(units=50))
             model.add(Dense(1))
-
             model.compile(loss='mean_squared_error', optimizer='adam')
             model.fit(x_train, y_train, epochs=1, batch_size=1, verbose=2)
         # predicting 246 values, using past 60 from the train data
@@ -135,7 +134,8 @@ def my_LSTM(ticker):
             y=1,
             xanchor='left',
             x=0)
-            , height=600, title_text='Predictions on Validation Data', template='gridon'
+            , height=600, title_text='Predictions on Validation Data', template='gridon',
+            xaxis_rangeslider_visible=True
             )
 
             st.plotly_chart(fig_preds, use_container_width=True)
@@ -164,8 +164,8 @@ def my_LSTM(ticker):
             with st.container():
                 col_111, col_222, col_333 = st.columns(3)
                 col_111.metric(f'Closing Price Prediction of the next trading day for {ticker} is',f' ₹ {str(round(float(prediction),2))}')
+                
             return prediction
-
         except:
             st.warning("Oops! can't predict the price!!The company you selected is listed newly.")
             st.warning("Please select another company to predict the price.")

@@ -5,7 +5,7 @@ import streamlit as st
 from bsedata.bse import BSE
 from jugaad_data.nse import NSELive
 
-st.set_page_config(page_title="Home", layout="wide")
+st.set_page_config(page_title="StockUP", layout="wide", page_icon=":chart_with_upwards_trend:")
 
 css = """
 <style>
@@ -17,6 +17,9 @@ css = """
 }
 [data-testid="stAppViewBlockContainer"]{
     padding-top:60px;
+}
+footer{
+    visibility: hidden;
 }
 </style>
 """
@@ -89,8 +92,8 @@ sensex_delta = get_sensex_delta()
 price_placeholder = st.empty()
 
 b = BSE()
-tg=b.topGainers()
-tl=b.topLosers()
+tg = b.topGainers()
+tl = b.topLosers()
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Top Gainers", " ", "Top Losers", " ", "Most Active", " "])
 with tab1:
     st.subheader("Top Gainers")
