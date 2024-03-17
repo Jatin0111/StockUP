@@ -15,4 +15,4 @@ plotly
 streamlit_extras
 millify
 tensorflow
-TA-Lib
+ta-lib-bin
