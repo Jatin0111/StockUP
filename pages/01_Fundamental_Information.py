@@ -71,7 +71,8 @@ else:
     else:
         st.write("****Website****: Not available")
     with st.expander('See detailed business summary'):
-        if longBuisinessSummary:
+        summary = info.get('longBusinessSummary')
+        if "summary":
             st.write(info['longBusinessSummary'])
         else:
             st.write("Not available")
