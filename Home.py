@@ -94,7 +94,7 @@ price_placeholder = st.empty()
 b = BSE()
 tg = b.topGainers()
 tl = b.topLosers()
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Top Gainers", " ", "Top Losers", " ", "Most Active", " "])
+tab1, tab2, tab3 = st.tabs(["Top Gainers", " ", "Top Losers"])
 with tab1:
     st.subheader("Top Gainers")
     for item in tg:
@@ -107,8 +107,6 @@ with tab3:
         security_id = item['securityID']
         pchange = item['pChange']
         st.metric("",f"{security_id}",delta=f"{pchange}",delta_color="normal",label_visibility="collapsed")
-with tab5:
-    st.subheader("Most Active")
     
 while True:
     with price_placeholder:
@@ -126,4 +124,4 @@ while True:
     it_delta = get_IT_delta()
     sensex_price = get_sensex_price()
     sensex_delta = get_sensex_delta()
-    time.sleep(2)
+    time.sleep(1)
