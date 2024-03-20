@@ -76,7 +76,11 @@ def get_sensex_delta():
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     class1 = 'JwB6zf V7hZne'
-    sensex_delta = soup.find(class_=class1).text
+    sensex_delta = soup.find(class_=class1)
+    if sensex_delta:
+        sensex_delta = sensex_delta.text
+    else:
+        sensex_delta = "N/A" 
     return sensex_delta
 
 st.title("Home")
