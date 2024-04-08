@@ -48,7 +48,7 @@ links = soup.findAll("link")
 image_urls = [enclosure.get('url') for enclosure in soup.findAll("enclosure")]
 dates = soup.findAll("pubDate")
 
-for title, description, link, image_url, date_str in zip(titles[2:], descriptions[1:], links[2:], image_urls, dates):
+for title, description, link, image_url, date_str in zip(titles[2:], descriptions[1:], links[3:], image_urls, dates):
     date = parser.parse(date_str.text)
     col1, col2 = st.columns([1, 2])
     with col1:
