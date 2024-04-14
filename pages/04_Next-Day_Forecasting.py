@@ -38,7 +38,7 @@ for i in range(0, len(symbol)):
 
 ticker = st.selectbox(
         'Enter or Choose NSE listed Stock Symbol',
-        symbol,placeholder='Enter or Choose a NSE listed Stock Symbol',index=symbol.index('SUZLON.NS'),label_visibility='hidden')
+        symbol,placeholder='Enter or Choose a NSE listed Stock Symbol',index=symbol.index('TEXRAIL.NS'),label_visibility='hidden')
 def my_LSTM(ticker):
         try:
             start = dt.datetime.today() - dt.timedelta(5*365)
