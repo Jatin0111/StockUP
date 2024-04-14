@@ -11,7 +11,7 @@ np.random.seed(1)
 tf.random.set_seed(1)
 rn.seed(1)
 from keras.models import Sequential
-from keras.layers import Dense, LSTM
+from keras.layers import Dense, LSTM 
 from sklearn.metrics import mean_squared_error, mean_absolute_error,r2_score
 
 st.set_page_config(page_title="StockUP", layout="wide", page_icon=":chart_with_upwards_trend:")
@@ -53,17 +53,15 @@ def my_LSTM(ticker):
                 new_data['Date'][i] = data['Date'][i]
                 new_data['Close'][i] = data['Close'][i]
 
-        # setting index
             new_data.index = new_data.Date
             new_data.drop('Date', axis=1, inplace=True)
 
-        # creating train and test sets
             dataset = new_data.values
 
             train = dataset[:987, :]
             valid = dataset[987:, :]
 
-        # converting dataset into x_train and y_train
+       
             scaler = MinMaxScaler(feature_range=(0, 1))
             scaled_data = scaler.fit_transform(dataset)
 
@@ -74,14 +72,14 @@ def my_LSTM(ticker):
             x_train, y_train = np.array(x_train), np.array(y_train)
 
             x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
-        # create and fit the LSTM network
+       
             model = Sequential()
             model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1], 1)))
             model.add(LSTM(units=50))
             model.add(Dense(1))
             model.compile(loss='mean_squared_error', optimizer='adam')
             model.fit(x_train, y_train, epochs=1, batch_size=1, verbose=2)
-        # predicting 246 values, using past 60 from the train data
+       
             inputs = new_data[len(new_data) - len(valid) - 60:].values
             inputs = inputs.reshape(-1, 1)
             inputs = scaler.transform(inputs)
@@ -96,7 +94,7 @@ def my_LSTM(ticker):
             closing_price = scaler.inverse_transform(closing_price)
 
 
-        # for plotting
+      
             train = data[:987]
             valid = data[987:]
             valid['Predictions'] = closing_price
@@ -140,7 +138,7 @@ def my_LSTM(ticker):
 
             st.plotly_chart(fig_preds, use_container_width=True)
 
-        # metrics
+     
             mae = mean_absolute_error(closing_price, valid['Adj Close'])
             rmse = np.sqrt(mean_squared_error(closing_price, valid['Adj Close']))
             accuracy = r2_score(closing_price, valid['Adj Close'])*100
@@ -152,7 +150,7 @@ def my_LSTM(ticker):
                 col_22.metric('Root mean squared error between predicted and actual value', round(rmse,2))
                 col_33.metric('Accuracy of the model', round(accuracy,2))
 
-        # forecasting
+      
             real_data = [inputs[len(inputs) - 60:len(inputs + 1), 0]]
             real_data = np.array(real_data)
             real_data = np.reshape(real_data, (real_data.shape[0], real_data.shape[1], 1))

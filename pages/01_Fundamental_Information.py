@@ -3,7 +3,6 @@ import yfinance as yf
 import datetime as dt
 import pandas as pd
 import plotly.graph_objects as go
-from streamlit_extras.colored_header import colored_header
 
 st.set_page_config(page_title="StockUP", layout="wide", page_icon=":chart_with_upwards_trend:")
 st.title('Fundamental Information')
@@ -42,19 +41,19 @@ else:
         st.write(f"****Sector****: {sector}")
     else:
         st.write("****Sector****: Not available")
-    ##   
+     
     industry = info.get('industry')
     if industry:
         st.write(f"****Industry****: {industry}")
     else:
         st.write("****Industry****: Not available")
-    #
+
     phone = info.get('phone')
     if phone:
         st.write(f"****Phone****: {phone}")
     else:
         st.write("****Phone****: Not available")
-    ##
+
     address1 = info.get('address1') 
     city = info.get('city')
     zip_code = info.get('zip')
@@ -64,7 +63,7 @@ else:
         st.write(f"****Address****: {address}")
     else:
         st.write("****Address****: Not available")
-    ##
+ 
     website = info.get('website')
     if website:
         st.write(f"****Website****: {website}")
@@ -76,8 +75,6 @@ else:
             st.write(info['longBusinessSummary'])
         else:
             st.write("Not available")
-
-
 
     min_value = dt.datetime.today() - dt.timedelta(10 * 365)
     max_value = dt.datetime.today()
@@ -94,15 +91,14 @@ else:
                 min_value=min_value, max_value=max_value, help='Enter the last date till which you have to look the price'
     )
 
-
     hist_price = yf.download(ticker,start_input,end_input)
     hist_price = hist_price.reset_index()
     hist_price['Date'] = pd.to_datetime(hist_price['Date']).dt.date
 
     @st.cache_data
-    def convert_dataf(df):
+    def convert_data(df):
         return df.to_csv().encode('utf-8')
-    historical_csv = convert_dataf(hist_price)
+    historical_csv = convert_data(hist_price)
     
     st.download_button(
             label="Download historical data as CSV",
@@ -111,7 +107,6 @@ else:
             mime='text/csv',
     )
 
-    #radio button ro switch between style
     chart = st.radio(
         "Choose Style",
         ('Candlestick', 'Line Chart'))
@@ -167,7 +162,7 @@ else:
         quarterly_results = quarterly_results.astype('int64')
         for i in quarterly_results.columns:
                 quarterly_results[i] = quarterly_results.apply(lambda x: "{:,}".format(x[i]), axis=1)
-        st.dataframe(quarterly_results.style.highlight_max(axis=1, color='lightgreen'))
+        st.dataframe(quarterly_results.style.highlight_max(axis=1, color='lightgreen'),width=1000)
 
 
     with tab2:
@@ -179,7 +174,7 @@ else:
         financials = financials.astype('int64')
         for i in financials.columns:
             financials[i] = financials.apply(lambda x: "{:,}".format(x[i]), axis=1)
-        st.dataframe(financials.style.highlight_max(axis=1,color='lightgreen'))
+        st.dataframe(financials.style.highlight_max(axis=1,color='lightgreen'),width=1000)
 
     with tab3:
         st.subheader('Balance Sheet')
@@ -190,7 +185,7 @@ else:
         balance = balance.astype('int64')
         for i in balance.columns:
             balance[i] = balance.apply(lambda x: "{:,}".format(x[i]), axis=1)
-        st.dataframe(balance.style.highlight_max(axis=1,color='lightgreen'))
+        st.dataframe(balance.style.highlight_max(axis=1,color='lightgreen'),width=1000)
 
     with tab4:
         st.subheader('Cash Flows')
@@ -201,7 +196,7 @@ else:
         cf = cf.astype('int64')
         for i in cf.columns:
             cf[i] = cf.apply(lambda x: "{:,}".format(x[i]), axis=1)
-        st.dataframe(cf.style.highlight_max(axis=1,color='lightgreen'))
+        st.dataframe(cf.style.highlight_max(axis=1,color='lightgreen'),width=1000)
 
     with tab5:
         st.subheader('Splits & Dividends')

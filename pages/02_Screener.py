@@ -63,11 +63,6 @@ else:
         breaking_out = is_breaking_out(df)
         consolidating = is_consolidating(df)
 
-        rsi_df = RSI(df,14)
-        rsi_df_tail = round(rsi_df['RSI'].iloc[-1:].astype('int64'), 2)
-
-        adx_df = ADX(df,14)
-        adx_df_tail = round(adx_df.iloc[-1:].astype('int64'), 2)
         st.divider()  
         with st.container():
                 col1, col2, col3, col4 = st.columns(4)

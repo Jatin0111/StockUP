@@ -6,7 +6,6 @@ from functions import *
 import plotly.graph_objects as go
 from patterns import candlestick_patterns
 import talib
-from streamlit_extras.colored_header import colored_header
 
 st.set_page_config(page_title="StockUP", layout="wide", page_icon=":chart_with_upwards_trend:")
 csv = pd.read_csv('symbols.csv')
@@ -32,17 +31,14 @@ st.divider()
 st.markdown(' :green[ Bullish - The stock is in up trendline]')
 st.markdown(' :white[Neutral - Not such activity or no trendline present at current moment]')
 st.markdown(' :red[Bearish - The stock is in down trendline]')
-ticker_input = st.selectbox('Enter or Choose NSE listed stock', symbol,index=symbol.index('TCS.NS'))
+ticker_input = st.selectbox('Enter or Choose NSE listed stock', symbol,index=symbol.index('SUZLON.NS'))
 
-#ploting prices
 show = st.radio(
         "Show/Hide Graph",
         ('Show', 'Hide'))
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-# closing price chart
 if (show == 'Show'):
 
-        # getting date input
         min_value = dt.datetime.today() - dt.timedelta(10 * 365)
         max_value = dt.datetime.today()
 
@@ -114,14 +110,11 @@ df = yf.download(ticker_input, start_input, end_input)
 df = df.reset_index()
 df['Date'] = pd.to_datetime(df['Date']).dt.date
 
-
-#scanning
 candle_names = candlestick_patterns.keys()
 
 for candle,names in candlestick_patterns.items():
         df[candle] = getattr(talib, candle)(df['Open'], df['High'], df['Low'], df['Close'])
-        last = df[candle].tail(1).values[0]
-
+        
 
 tmp_df = df.drop(['Date', 'Open','High', 'Low', 'Close', 'Adj Close', 'Volume'], axis=1,)
 
@@ -134,20 +127,20 @@ if not tmp_df.empty:
     signal_df['Signal'] = signal_df['Signal'].map({0: 'Neutral', -100:'Bearish', 100:'Bullish'})
     bullish_count = len(signal_df[signal_df['Signal'] == 'Bullish'])
     bearish_count = len(signal_df[signal_df['Signal'] == 'Bearish'])
-    #metrics
+    
     with st.container():
         st.write('#### Overview of pattern recognition')
         coll_11, coll_22, coll_33 = st.columns(3)
         coll_11.metric('Patterns with bullish signals', bullish_count)
         coll_22.metric('Pattersn with bearish signals', bearish_count)
         
-    @st.cache_data
-    def color_survived(val):
+ 
+    def color(val):
         color = 'green' if val == 'Bullish' else 'red' if val == 'Bearish' else None
         return f'background-color: {color}'
     
     st.write('#### All candlestick patterns signals ')
-    st.table(signal_df.style.applymap(color_survived, subset=['Signal']))
+    st.table(signal_df.style.applymap(color, subset=['Signal']))
     sample = len(signal_df[signal_df['Signal'] == 'Bullish'])
 else:
     st.write("No data available for the selected ticker.")

@@ -1,8 +1,7 @@
 import streamlit as st
 import numpy as np
 
-
-
+#Function to calculate Moving Average
 @st.cache_data
 def calc_moving_average(data, size):
         df = data.copy()
@@ -35,7 +34,7 @@ def ATR(data, n):
         df2 = df.drop(['H-L', 'H-PC', 'L-PC'], axis=1)
         return df2
 
-    #function to calculate RSI
+#function to calculate RSI
 @st.cache_data
 def RSI(data, n):
         "function to calculate RSI"
